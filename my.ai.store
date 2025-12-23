@@ -1,0 +1,7 @@
+/my-ai-store
+  ├── .env                 <-- (HIDDEN) Holds your API Keys & Database URL
+  ├── app.py               <-- The Brain (Python Backend)
+  ├── requirements.txt     <-- The Toolbelt (List of software needed)
+  ├── Dockerfile           <-- The Shipping Container (Instructions for Cloud)
+  └── templates/
+      └── index.html       <-- The Face (Your Website HTML)

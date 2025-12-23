@@ -1,0 +1,342 @@
+Store HTML 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Nexus | The Self-Evolving Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ai: '#6366f1',
+                        dark: '#0f172a',
+                        surface: '#1e293b'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .ai-pulse {
+            animation: pulse-glow 2s infinite;
+        }
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(99, 102, 241, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+        }
+    </style>
+</head>
+<body class="bg-dark text-white min-h-screen flex flex-col">
+
+    <nav class="border-b border-gray-800 bg-surface sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <i class="fa-solid fa-brain text-ai text-2xl mr-2"></i>
+                    <span class="font-bold text-xl tracking-tight">AI Nexus</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#" class="bg-ai text-white px-3 py-2 rounded-md text-sm font-medium">Store</a>
+                        <a href="#admin" onclick="toggleAdminPanel()" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            <i class="fa-solid fa-robot mr-1"></i> AI Admin /**
+ * AI STORE MANAGER - LOGIC SIMULATION
+ * -----------------------------------
+ * This script simulates what your Python/Node.js backend would do.
+ */
+
+class AIStoreManager {
+    constructor(name) {
+        this.name = name;
+        this.status = "ONLINE";
+        this.suppliers = ["GlobalTechAPI", "FashionDrop", "AliExpress_Mirror"];
+        this.currentTrends = ["Cyberpunk", "Eco-Friendly", "Smart Home"];
+    }
+
+    // JOB 1: THE SCOUT
+    // Connects to external 'apps' and stores to find raw products
+    async scanExternalMarkets() {
+        console.log(`[${this.name}]: Connecting to external supplier APIs...`);
+        
+        // Simulating data fetched from an API
+        const rawData = [
+            { id: 101, name: "Cheap Plastic Watch", rating: 2.1, price: 5.00, category: "Accessories" },
+            { id: 102, name: "Levitating Bonsai Pot", rating: 4.8, price: 45.00, category: "Home" },
+            { id: 103, name: "Broken Drone", rating: 1.0, price: 20.00, category: "Tech" },
+            { id: 104, name: "Holographic Keyboard", rating: 4.5, price: 120.00, category: "Tech" }
+        ];
+
+        console.log(`[${this.name}]: Found ${rawData.length} potential products.`);
+        return rawData;
+    }
+
+    // JOB 2: THE CURATOR
+    // The "AI" part that decides what enters your store
+    async curateProducts(products) {
+        console.log(`[${this.name}]: Analyzing product quality...`);
+        
+        const approvedProducts = products.filter(product => {
+            // AI Logic: Reject items with low ratings
+            if (product.rating < 4.0) {
+                console.log(`[AI DECISION]: REJECTED "${product.name}" (Rating too low: ${product.rating})`);
+                return false;
+            }
+            // AI Logic: Reject items that look like scams (simulated)
+            if (product.name.includes("Broken")) {
+                console.log(`[AI DECISION]: REJECTED "${product.name}" (Detected damaged goods)`);
+                return false;
+            }
+            
+            console.log(`[AI DECISION]: APPROVED "${product.name}" for import.`);
+            return true;
+        });
+
+        return approvedProducts;
+    }
+
+    // JOB 3: THE BUILDER
+    // Automatically updates your HTML to show the new items
+    updateStorefront(newProducts) {
+        console.log(`[${this.name}]: Pushing updates to live website...`);
+        const container = document.getElementById('product-container');
+        
+        // This is where the AI modifies your HTML automatically
+        newProducts.forEach(p => {
+            const html = `
+                <div class="glass-panel rounded-xl overflow-hidden border-2 border-green-500 relative">
+                    <div class="absolute top-0 right-0 bg-green-500 text-white text-xs font-bold px-2 py-1">JUST ADDED BY AI</div>
+                    <div class="h-48 bg-gray-800 flex items-center justify-center text-gray-500">
+                        <i class="fa-solid fa-box-open text-4xl"></i>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-white">${p.name}</h3>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="text-gray-300">$${p.price}</span>
+                            <button class="text-green-400">View</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            // Prepend adds it to the START of the list
+            container.insertAdjacentHTML('afterbegin', html);
+        });
+
+        alert(`AI REPORT: I scanned the market, rejected bad products, and added ${newProducts.length} new high-quality items to your store.`);
+    }
+
+    // MASTER COMMAND
+    async runDailyCycle() {
+        const raw = await this.scanExternalMarkets();
+        const clean = await this.curateProducts(raw);
+        this.updateStorefront(clean);
+    }
+}
+
+// Initialize the AI
+const myAI = new AIStoreManager("Nexus_V1");
+
+// --- TEST COMMAND ---
+// Run this in your browser console or bind it to a button to see it work!
+// myAI.runDailyCycle();
+
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <i class="fa-solid fa-cart-shopping text-gray-300 hover:text-ai cursor-pointer text-xl"></i>
+                    <span class="ml-1 bg-red-500 rounded-full text-xs px-1">3</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow">
+        
+        <div class="relative overflow-hidden">
+            <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl">
+                    <span class="block">The Future of Shopping</span>
+                    <span class="block text-ai">Curated by Artificial Intelligence</span>
+                </h1>
+                <p class="mt-4 max-w-md mx-auto text-base text-gray-400 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
+                    Our AI scans thousands of global stores instantly to bring you the best products at the lowest prices. 24/7.
+                </p>
+                <div class="mt-8 flex justify-center">
+                    <div class="inline-flex rounded-md shadow">
+                        <a href="#products" class="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-ai hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
+                            Shop Arrivals
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="products" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+                <i class="fa-solid fa-bolt text-yellow-400 mr-2"></i> Live Trends (Synced via API)
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="product-container">
+                </div>
+        </div>
+
+    </main>
+
+    <div id="ai-dashboard" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden flex items-center justify-center">
+        <div class="bg-surface border border-gray-700 w-11/12 max-w-4xl h-5/6 rounded-xl shadow-2xl flex flex-col overflow-hidden">
+            
+            <div class="bg-gray-900 p-4 border-b border-gray-700 flex justify-between items-center">
+                <div class="flex items-center">
+                    <div class="w-3 h-3 rounded-full bg-green-500 ai-pulse mr-2"></div>
+                    <h3 class="font-mono text-green-400">SYSTEM STATUS: ONLINE (v2.4.1)</h3>
+                </div>
+                <button onclick="toggleAdminPanel()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark fa-lg"></i></button>
+            </div>
+
+            <div class="flex-grow flex">
+                <div class="w-64 bg-gray-900 hidden md:flex flex-col p-4 border-r border-gray-700">
+                    <div class="text-xs text-gray-500 uppercase mb-2">Modules</div>
+                    <button class="text-left text-gray-300 hover:bg-gray-800 p-2 rounded mb-1"><i class="fa-solid fa-code-branch mr-2"></i>Auto-Updater</button>
+                    <button class="text-left text-gray-300 hover:bg-gray-800 p-2 rounded mb-1"><i class="fa-solid fa-network-wired mr-2"></i>Supply Chain API</button>
+                    <button class="text-left text-gray-300 hover:bg-gray-800 p-2 rounded mb-1"><i class="fa-solid fa-chart-line mr-2"></i>Revenue AI</button>
+                </div>
+                
+                <div class="flex-grow p-6 bg-black font-mono text-sm overflow-y-auto" id="ai-terminal">
+                    <div class="text-gray-500">Initializing Core Systems...</div>
+                    <div class="text-green-500">Connected to External APIs: Amazon, AliExpress, Shopify.</div>
+                    <div class="text-blue-400">Scanning for product trends... Found "Smart Home Devices".</div>
+                    <div class="text-gray-300 mt-4">> Welcome, Admin. I am monitoring the store. Current conversion rate: 4.2%.</div>
+                    <div class="text-gray-300">> Awaiting your command for next upgrade cycle...</div>
+                </div>
+            </div>
+
+            <div class="p-4 bg-gray-900 border-t border-gray-700">
+                <form onsubmit="handleCommand(event)" class="flex">
+                    // New Real Connection
+async function triggerAIScan() {
+    terminal.innerHTML += `<div class="text-blue-400">AI: Contacting AliExpress API...</div>`;
+    
+    // Send command to your Python Backend
+    const res = await fetch('/api/scan-market', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ keyword: "trending tech" })
+    });
+    
+    const data = await res.json();
+    terminal.innerHTML += `<div class="text-green-400">AI: ${data.message}</div>`;
+    
+    // Refresh the grid
+    fetchProducts();
+}
+
+triggerAIScan();
+
+        // --- 1. MOCK DATA FOR PRODUCTS 
+
+// --- 1. REAL AI DATA FETCH ---
+async function fetchProducts() {
+    try {
+        // This asks your new server.js for data
+        const response = await fetch('/api/products'); 
+        const products = await response.json();
+        
+        const container = document.getElementById('product-container');
+        container.innerHTML = ''; // Clear loading state
+
+        products.forEach(p => {
+            // ... (Use the same rendering code as before) ...
+        });
+    } catch (error) {
+        console.error("Could not load AI products:", error);
+    }
+}
+
+// Load products when page opens
+fetchProducts();
+
+
+        // --- 2. RENDER PRODUCTS ---
+        const container = document.getElementById('product-container');
+        products.forEach(p => {
+            const html = `
+                <div class="glass-panel rounded-xl overflow-hidden hover:scale-105 transition duration-300 group">
+                    <div class="relative">
+                        <img src="${p.img}" alt="${p.name}" class="w-full h-48 object-cover">
+                        <span class="absolute top-2 right-2 bg-ai text-xs font-bold px-2 py-1 rounded text-white">${p.tag}</span>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-white group-hover:text-ai transition">${p.name}</h3>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="text-gray-300">${p.price}</span>
+                            <button class="text-ai hover:text-white"><i class="fa-solid fa-plus-circle fa-lg"></i></button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.innerHTML += html;
+        });
+
+        // --- 3. AI ADMIN DASHBOARD LOGIC ---
+        function toggleAdminPanel() {
+            const panel = document.getElementById('ai-dashboard');
+            panel.classList.toggle('hidden');
+        }
+
+        function handleCommand(e) {
+                    function handleCommand(e) {
+            e.preventDefault();
+            const input = document.getElementById('ai-input');
+            const command = input.value.toLowerCase();
+            
+            // ... (keep existing terminal logging code) ...
+
+            // NEW: Connect the AI Class
+            if (command.includes("scan") || command.includes("update store")) {
+                terminal.innerHTML += `<div class="text-ai mt-1">AI: Starting market scan protocol...</div>`;
+                // Run the simulation
+                myAI.runDailyCycle(); 
+            }
+        }
+
+
+
+            if (!command) return;
+
+            // User Command
+            terminal.innerHTML += `<div class="text-white mt-2">> ${command}</div>`;
+
+            // Simulated AI Response (In reality, this would hit your OpenAI/Claude API)
+            setTimeout(() => {
+                terminal.innerHTML += `<div class="text-ai mt-1">PROCESSING: Analyzing request...</div>`;
+            }, 500);
+
+            setTimeout(() => {
+                let response = "I have logged this request. To make this functional, connect my backend to the OpenAI API.";
+                if(command.toLowerCase().includes("product")) {
+                    response = "Scanning external marketplaces for new products... Found 12 items. Syncing database...";
+                } else if(command.toLowerCase().includes("update")) {
+                    response = "Initiating self-update sequence. Pulling latest code from repository...";
+                }
+                
+                terminal.innerHTML += `<div class="text-green-400 mt-1">AI: ${response}</div>`;
+                terminal.scrollTop = terminal.scrollHeight; // Auto scroll to bottom
+            }, 1500);
+
+            input.value = '';
+        }
+    </script>
+</body>
+</html>
+

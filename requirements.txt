@@ -1,0 +1,15 @@
+requirements.txt 
+
+flask
+flask-cors
+psycopg2-binary
+python-aliexpress-api
+python-dotenv
+
+flask
+flask-cors
+psycopg2-binary
+python-aliexpress-api
+python-dotenv
+apscheduler
+gunicorn
