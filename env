@@ -1,0 +1,68 @@
+env
+
+DATABASE_URL=" 
+
+postgres://avnadmin:AVNS_pRcHCwMIZDtb-a36vO7@pg-27bedb52-bebegardon-9b1f.f.aivencloud.com:23030/defaultdb?sslmode=require
+
+postgres://avnadmin:AVNS_pRcHCwMIZDtb-a36vO7@replica-pg-27bedb52-bebegardon-9b1f.f.aivencloud.com:23030/defaultdb?sslmode=require
+
+// server.js - The Backend Brain
+require('dotenv').config();
+const { Client } = require('pg');
+const express = require('express');
+const app = express();
+
+// 1. Connect to your Aiven Database (from Screenshot 7)
+const client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false // Required for Aiven/Google Cloud connections
+    }
+});
+
+client.connect()
+    .then(() => console.log('✅ Connected to Aiven PostgreSQL Database successfully!'))
+    .catch(err => console.error('❌ Database connection error:', err.stack));
+
+// 2. Setup the "Memory" (Create Table if it doesn't exist)
+async function setupDatabase() {
+    const createTableQuery = `
+        CREATE TABLE IF NOT EXISTS products (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            price DECIMAL(10, 2) NOT NULL,
+            image_url TEXT,
+            ai_rating DECIMAL(2, 1),
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+    `;
+    
+    try {
+        await client.query(createTableQuery);
+        console.log("✅ Product Storage Table is ready.");
+    } catch (err) {
+        console.error("Error setting up table:", err);
+    }
+}
+
+// Run the setup immediately when server starts
+setupDatabase();
+
+// 3. The API (The bridge between HTML and Database)
+app.get('/api/products', async (req, res) => {
+    try {
+        const result = await client.query('SELECT * FROM products ORDER BY created_at DESC LIMIT 20');
+        res.json(result.rows);
+    } catch (err) {
+        res.status(500).json({ error: "Database error" });
+    }
+});
+
+// Start the server
+app.listen(3000, () => {
+    console.log('Server is running on port 3000');
+});
+
+DATABASE_URL="postgres://avnadmin:..." (Your Aiven Link)
+ALI_KEY="34..." (The key you pasted)
+ALI_SECRET="mk_..." (The secret you pasted)
