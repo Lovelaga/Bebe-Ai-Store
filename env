@@ -1,5 +1,3 @@
-env
-
 DATABASE_URL=" 
 
 postgres://avnadmin:AVNS_pRcHCwMIZDtb-a36vO7@pg-27bedb52-bebegardon-9b1f.f.aivencloud.com:23030/defaultdb?sslmode=require
